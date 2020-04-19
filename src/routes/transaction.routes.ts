@@ -22,6 +22,8 @@ transactionRouter.get('/', (request, response) => {
     const balance = balanceService.getBalance();
     return response.json(balance);
   } catch (err) {
+    console.log(err);
+    console.log(err.message);
     return response.status(400).json({ error: err.message });
   }
 });
@@ -44,7 +46,7 @@ transactionRouter.post('/', (request, response) => {
 
     return response.json(transaction);
   } catch (err) {
-    return response.status(400).json(err);
+    return response.status(400).json({ error: err.message });
   }
 });
 

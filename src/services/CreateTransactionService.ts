@@ -32,9 +32,16 @@ class CreateTransactionService {
       this.validationMessage,
     );
 
-    const errors = this.transactionValidator.validate(value, type);
-    if (errors.errors.length) {
-      throw errors;
+    let errors = '';
+
+    if (type === 'income') {
+      errors = this.transactionValidator.validateIncome(value, type);
+    } else if (type === 'outcome') {
+      errors = this.transactionValidator.validateOutcome(value, type);
+    }
+
+    if (errors.length) {
+      throw Error(errors);
     }
 
     const transaction = this.transactionsRepository.create({
